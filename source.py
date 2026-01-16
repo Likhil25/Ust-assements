@@ -8,17 +8,15 @@ app = FastAPI()
 
 templates = Jinja2Templates(directory="Templates")
 
-# ---------- HOME ----------
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
     return templates.TemplateResponse("sindex.html", {"request": request})
 
-# ---------- ADD FORM ----------
+
 @app.get("/add", response_class=HTMLResponse)
 def add(request: Request):
     return templates.TemplateResponse("sadd.html", {"request": request})
 
-# ---------- SAVE DETAILS ----------
 @app.post("/savedetails", response_class=HTMLResponse)
 def save_details(
     request: Request,
@@ -45,7 +43,7 @@ def save_details(
 
     return templates.TemplateResponse("ssuccess.html", {"request": request, "msg": msg})
 
-# ---------- DISPLAY TABLE ----------
+
 @app.get("/view", response_class=HTMLResponse)
 def view(request: Request):
     con = sqlite3.connect("senroll.db")
@@ -55,7 +53,6 @@ def view(request: Request):
     rows = cur.fetchall()
     return templates.TemplateResponse("sview.html", {"request": request, "rows": rows})
 
-# ---------- JSON DATA API ----------
 @app.get("/data")
 def data():
     con = sqlite3.connect("senroll.db")
